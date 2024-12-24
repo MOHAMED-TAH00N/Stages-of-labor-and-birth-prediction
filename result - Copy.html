@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urgent Advice</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff5f5;
+            color: #333;
+            text-align: center;
+            padding-top: 50px;
+        }
+        .message-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffe6e6;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #d9534f;
+        }
+        p {
+            font-size: 18px;
+            margin: 15px 0;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #d9534f;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+    {% if prediction == "Positive labor outcome" %}
+    <h1>Labor Outcome Prediction: {{ prediction }}</h1>
+    <p>Based on the provided information, your condition might require immediate medical attention.</p>
+    <p><strong>Please go to the nearest hospital as soon as .</p>
+    <a href="/" class="btn">Back to Form</a>
+    <a href="/" class="btn">Nearest Hospital</a>
+    {% else %}
+    <h1>Labor Outcome Prediction</h1>
+    <h1>Labor Outcome Prediction</h1>
+    <p>{{ prediction }}</p>
+    <a href="/" class="btn">Back to Form</a>
+    <a class="send-button w-100" href="#" onclick="navigateTo()">Chat Assistant</a>
+
+    <script>
+        function navigateTo() {
+            // Replace "mohamed" with the actual path you want to navigate to
+            const destination = "file:///E:/deployapp/templates/result.html";
+            window.location.href = destination;
+        }
+    </script>
+
+
+{% endif %}
+</body>
+</html>

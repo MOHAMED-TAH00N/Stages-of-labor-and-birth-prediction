@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labor Outcome Prediction</title>
+    <style>
+        /* General Page Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f5fa;
+            color: #333;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Header */
+        h1 {
+            text-align: center;
+            color: #0077cc;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        /* Form Grid Layout */
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 30px;
+        }
+
+        /* Labels */
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* Inputs, Selects, Buttons */
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccd9e3;
+            border-radius: 10px;
+            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+            background-color: #f9fcff;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="number"]:focus,
+        select:focus {
+            border-color: #0077cc;
+            outline: none;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .radio-group label {
+            font-weight: normal;
+            color: #333;
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+        }
+
+        /* Full-Width Row for Buttons */
+        .full-width {
+            grid-column: 1 / -1;
+            text-align: center;
+        }
+
+        /* Submit Button */
+        button {
+            padding: 14px 24px;
+            background-color: #0077cc;
+            color: #fff;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #005fa3;
+            transform: scale(1.02);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            form {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Labor Outcome Prediction</h1>
+        <form action="/predict" method="post">
+            <!-- Maternal Age -->
+            <div>
+                <label for="maternal_age">Maternal Age</label>
+                <input type="number" name="maternal_age" id="maternal_age" min="15" max="50" placeholder="Enter maternal age" required>
+            </div>
+
+            <!-- Gestational Age (weeks) -->
+            <div>
+                <label for="gestational_age">Gestational Age (weeks)</label>
+                <input type="number" name="gestational_age" id="gestational_age" min="1" max="42" placeholder="Enter gestational age" required>
+            </div>
+
+            <!-- Cervical Dilatation (cm) -->
+            <div>
+                <label for="cervical_dilatation">Cervical Dilatation (cm)</label>
+                <select name="cervical_dilatation" id="cervical_dilatation" required>
+                    <option value="">-- Select --</option>
+                    <option value="Closed">Closed</option>
+                    <option value="Latent Phase">Latent Phase</option>
+                    <option value="Active Phase">Active Phase</option>
+                    <option value="Transition Phase">Transition Phase</option>
+                    <option value="Fully Dilated">Fully Dilated</option>
+                </select>
+            </div>
+
+            <!-- Contraction Frequency (min) -->
+            <div>
+                <label for="contraction_frequency">Contraction Frequency (min)</label>
+                <select name="contraction_frequency" id="contraction_frequency" required>
+                    <option value="">-- Select --</option>
+                    <option value="Rare">Rare</option>
+                    <option value="Frequent">Frequent</option>
+                    <option value="Very Frequent">Very Frequent</option>
+                </select>
+            </div>
+
+            <!-- Fetal Heart Rate (bpm) -->
+            <div>
+                <label for="fetal_heart_rate">Fetal Heart Rate (bpm)</label>
+                <select name="fetal_heart_rate" id="fetal_heart_rate" required>
+                    <option value="">-- Select --</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Tachycardia">Tachycardia</option>
+                    <option value="Bradycardia">Bradycardia</option>
+                </select>
+            </div>
+
+            <!-- Amniotic Fluid Condition -->
+            <div>
+                <label for="amniotic">Amniotic Fluid Condition</label>
+                <select name="amniotic" id="amniotic" required>
+                    <option value="">-- Select --</option>
+                    <option value="Clear">Clear</option>
+                    <option value="Blood-stained">Blood-stained</option>
+                    <option value="Meconium-stained">Meconium-stained</option>
+                </select>
+            </div>
+
+            <!-- Pain Location -->
+            <div>
+                <label for="pain">Pain Location</label>
+                <select name="pain" id="pain" required>
+                    <option value="">-- Select --</option>
+                    <option value="Groin">Groin</option>
+                    <option value="Abdomen">Abdomen</option>
+                </select>
+            </div>
+
+            <!-- Show Present -->
+            <div>
+                <label>Show Present</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="show_present" value="Y" required> Yes</label>
+                    <label><input type="radio" name="show_present" value="N" required> No</label>
+                </div>
+            </div>
+
+            <!-- Bag of Waters -->
+            <div>
+                <label>Bag of Waters</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="bag_of_waters" value="Y" required> Yes</label>
+                    <label><input type="radio" name="bag_of_waters" value="N" required> No</label>
+                </div>
+            </div>
+
+            <!-- Parity -->
+            <div>
+                <label for="parity">Parity</label>
+                <select name="parity" id="parity" required>
+                    <option value="">-- Select --</option>
+                    <option value="Primigravida">Primigravida</option>
+                    <option value="Multigravida">Multigravida</option>
+                </select>
+            </div>
+
+            <!-- Previous Pregnancy Complications -->
+            <div>
+                <label>Previous Pregnancy Complications</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="previous_complications" value="Y" required> Yes</label>
+                    <label><input type="radio" name="previous_complications" value="N" required> No</label>
+                </div>
+            </div>
+
+            <!-- Labor Stage -->
+            <div>
+                <label for="labor_stage">Labor Stage</label>
+                <select name="labor_stage" id="labor_stage" required>
+                    <option value="">-- Select --</option>
+                    <option value="First">First</option>
+                    <option value="Second">Second</option>
+                    <option value="Third">Third</option>
+                    <option value="Fourth">Fourth</option>
+                </select>
+            </div>
+
+            <!-- Analgesia Used -->
+            <div>
+                <label>Analgesia Used</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="analgesia" value="Y" required> Yes</label>
+                    <label><input type="radio" name="analgesia" value="N" required> No</label>
+                </div>
+            </div>
+
+            <!-- Risk Level -->
+            <div>
+                <label for="risk">Risk Level</label>
+                <select name="risk" id="risk" required>
+                    <option value="">-- Select --</option>
+                    <option value="High">High</option>
+                    <option value="Low">Low</option>
+                </select>
+            </div>
+
+            <!-- Labor Duration Estimation -->
+            <div>
+                <label for="labor_duration">Labor Duration Estimation</label>
+                <input type="number" name="labor_duration" id="labor_duration" step="any" placeholder="Enter estimated hours" required>
+
+            </div>
+
+            <!-- Submit Button -->
+            <div class="full-width">
+                <button type="submit">Predict Outcome</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
